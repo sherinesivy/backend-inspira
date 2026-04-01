@@ -23,6 +23,22 @@ const userSchema = new mongoose.Schema({
   },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+  },
+  verificationTokenExpiry: {
+    type: Date,
+  },
+  resetPasswordToken: { type: String },
+resetPasswordExpiry: { type: Date },
+googleId: {
+  type: String,
+  default: "",
+},
 }, { timestamps: true });
 
 export default mongoose.model("User", userSchema);
