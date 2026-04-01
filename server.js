@@ -1,22 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-});
-
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err);
-});
-
-
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 import usersRouter from "./routes/users.js";
-
 
 const app = express();
 
@@ -27,6 +17,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/users", usersRouter);
 
+console.log("MONGO_URI:", process.env.MONGO_URI ? "found" : "MISSING");
+console.log("PORT:", process.env.PORT);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
@@ -35,4 +27,7 @@ mongoose.connect(process.env.MONGO_URI)
       console.log(`Server running on port ${process.env.PORT || 5000}`);
     });
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  });k
