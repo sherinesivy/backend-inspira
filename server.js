@@ -1,6 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+});
+
 
 import express from "express";
 import mongoose from "mongoose";
