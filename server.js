@@ -25,6 +25,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/users", usersRouter);
